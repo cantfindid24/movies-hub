@@ -5,10 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import axios from 'axios';
 import { img_300, noPicture } from '../config';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const apikey = process.env.API_KEY;
-
 export default function Carousel({ media_type, id }) {
   const settings = {
     infinite: true,
@@ -23,7 +19,7 @@ export default function Carousel({ media_type, id }) {
   useEffect(() => {
     const fetchCredits = async () => {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${apikey}&language=en-US`
+        `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_API}&language=en-US`
       );
       setCredits(data.cast);
     };
@@ -35,7 +31,7 @@ export default function Carousel({ media_type, id }) {
     <>
       <Slider {...settings}>
         {credits.map((c) => (
-          <div className="carouselItem">
+          <div className="carouselItem" key={c.id}>
             <img
               src={c.profile_path ? `${img_300}/${c.profile_path}` : noPicture}
               alt={c?.name}

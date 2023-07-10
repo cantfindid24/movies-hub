@@ -4,10 +4,6 @@ import { img_500, unavailable, unavailableLandscape } from './../config';
 import { Button } from 'react-bootstrap';
 import Carousel from './Carousel';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const apikey = process.env.API_KEY;
-
 export default function Modal({ showModal, media_type, id }) {
   const [content, setContent] = useState();
   const [videoData, setVideoData] = useState([]);
@@ -15,13 +11,13 @@ export default function Modal({ showModal, media_type, id }) {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/${media_type}/${id}?api_key=${apikey}&language=en-US`
+        `https://api.themoviedb.org/3/${media_type}/${id}?api_key=${process.env.REACT_APP_API}&language=en-US`
       );
       setContent(data);
     };
     const fetchvideoData = async () => {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/${media_type}/${id}/videos?api_key=${apikey}&language=en-US`
+        `https://api.themoviedb.org/3/${media_type}/${id}/videos?api_key=${process.env.REACT_APP_API}&language=en-US`
       );
       setVideoData(data.results[0]?.key);
     };

@@ -4,10 +4,6 @@ import Items from '../components/Items';
 import CustomPagination from './../components/CustomPagination';
 import Genres from './../components/Genres';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const apikey = process.env.API_KEY;
-
 export default function Series() {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,7 +26,7 @@ export default function Series() {
       setLoading(true);
       try {
         const { data } = await axios.get(`
-        https://api.themoviedb.org/3/discover/tv?api_key=${apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`);
+        https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`);
         setContent(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {

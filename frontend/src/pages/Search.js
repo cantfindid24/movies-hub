@@ -12,10 +12,6 @@ import Items from '../components/Items';
 import CustomPagination from '../components/CustomPagination';
 import axios from 'axios';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const apikey = process.env.API_KEY;
-
 export default function Search() {
   const [type, setType] = useState(0);
   const [query, setQuery] = useState('');
@@ -37,9 +33,9 @@ export default function Search() {
       setLoading(true);
       try {
         const { data } = await axios.get(`
-        https://api.themoviedb.org/3/search/${
-          type ? 'tv' : 'movie'
-        }?api_key=${apikey}&language=en-US&query=${query}&page=${page}&include_adult=false`);
+        https://api.themoviedb.org/3/search/${type ? 'tv' : 'movie'}?api_key=${
+          process.env.REACT_APP_API
+        }&language=en-US&query=${query}&page=${page}&include_adult=false`);
         setContent(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -87,8 +83,8 @@ export default function Search() {
           indicatorColor="primary"
           textColor="primary"
           onChange={(evt, newValue) => {
-            console.log(evt);
-            console.log(newValue);
+            // console.log(evt);
+            // console.log(newValue);
             setType(newValue);
             setPage(1);
           }}

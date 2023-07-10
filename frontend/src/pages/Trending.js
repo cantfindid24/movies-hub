@@ -3,10 +3,6 @@ import axios from 'axios';
 import Items from '../components/Items';
 import CustomPagination from './../components/CustomPagination';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const apikey = process.env.API_KEY;
-
 export default function Trending() {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +13,7 @@ export default function Trending() {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `https://api.themoviedb.org/3/trending/all/day?api_key=${apikey}&page=${page}`
+          `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API}&page=${page}`
         );
 
         setContent(data.results);
